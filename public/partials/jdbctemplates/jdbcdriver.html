@@ -1,0 +1,64 @@
+<div  ng-controller="NewDriverInstanceCtrl as db">
+    <div class="modal-header">
+        <h3 class="modal-title">New JDBC Driver</h3>
+    </div>
+    <div class="modal-body" style="min-height: 100px" >
+
+        <div class="row">
+            <div class="form-group" style="padding-bottom: 30px">
+                <label id="lbl_drivername" for="drivername" class="col-sm-4 control-label"><span style="color: red;">* </span>Name</label>
+
+                <div class="col-sm-8" >
+                    <input type="text" class="form-control" name="name" id="drivername" placeholder="Enter driver name..."
+                           ng-model="db.drivername">
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-bottom: 30px">
+                <label id="lbl_driverclass" for="driverclass" class="col-sm-4 control-label"><span style="color: red;">* </span>Driver Class</label>
+
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="driverclass" id="driverclass" placeholder="Enter driver class..."
+                           ng-model="db.driverclass">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lbl_driverfile" for="driverfile" class="col-sm-4 control-label"><span style="color: red;">* </span>Driver File</label>
+
+                <div class="col-sm-8 controls">
+                    <input class="btn-file" type="file" name="driverfile" id="driverfile" accept="application/x-java-archive" ng-file-select="onFileSelect($files)" multiple upload>
+                    <div>
+                        <span ng-show="selectedFiles.length > 1">
+                            <ul>
+                                <li ng-repeat="file in selectedFiles">{{file.name}}</li>
+                            </ul>
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class="err" ng-show="errorMsg != null">{{errorMsg}}</div>
+                <br/>
+                Progress:
+                <div ng-show="selectedFiles != null">
+                    <div class="sel-file" ng-repeat="f in selectedFiles">
+                        <span style="display: inline-flex; padding-left: 15px;">
+                            <span style="padding-right: 5px;">{{($index + 1) + '.' + ' ' }}</span>
+                            <span class="progress" ng-show="progress[$index] >= 0">
+                                <div style="width:{{progress[$index]}}%">{{progress[$index]}}%</div>
+                            </span>
+                            <span style="padding-left: 15px">{{f.name + '  '}} size: {{f.size}}B  type: {{f.type}}</span>
+                        </span><br>
+                        <!--{{f.name}} - size: {{f.size}}B - type: {{f.type.substr(f.type.indexOf('-')+1)}}-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok(db)">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

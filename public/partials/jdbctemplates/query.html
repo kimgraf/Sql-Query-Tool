@@ -1,0 +1,59 @@
+<div ng-controller="SqlQueryCtrl as sq">
+    <form id="CreateSqlQueryForm" name="CreateSqlQueryForm" class="form-horizontal" role="form"
+          ng-submit="sq.createSqlQuery()">
+        <legend class="sm-col-12">Query Information</legend>
+
+        <div class="form-group">
+            <label id="lbl_Name" for="name" class="col-sm-4 control-label">Name</label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="name" id="name" placeholder=""
+                       ng-model="sq.name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_query_text" for="queryText" class="col-sm-4 control-label">Query</label>
+
+            <div class="col-sm-8">
+                <textarea type="text" class="form-control" name="queryText" id="queryText" placeholder=""
+                       ng-model="sq.queryText" ></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_database" for="database" class="col-sm-4 control-label"
+                   is-required="true">Database</label>
+
+            <div class="col-sm-7">
+                <select class="form-control"  ng-model="sq.database" ng-options="db.name for db in sq.databases" id="database">
+                    <option value="">-- choose one --</option>
+                </select>
+            </div>
+            <div ><button ng-click="sq.newDatabase()" class="btn btn-primary" id="btn_database">New</button></div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_description" for="description" class="col-sm-4 control-label"
+                   is-required="false">Description</label>
+
+            <div class="col-sm-8">
+                <textarea type="text" class="form-control" name="description" id="description" placeholder=""
+                       ng-model="sq.description"></textarea>
+            </div>
+        </div>
+
+        <pre>{{ sq.sqlquery | json }}</pre>
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8 text-right">
+                <a ng-href="/#/" id="btn_cancel" class="btn btn-warning">Cancel</a>
+
+                <button type="submit" class="btn btn-success" id="btn_run">Run</button>
+                <button type="submit" class="btn btn-success" id="btn_create">Save</button>
+             </div>
+        </div>
+
+
+    </form>
+</div>

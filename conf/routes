@@ -1,0 +1,35 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Note: @controllers syntax signifies the actual controller instance, retrieved via GlobalSettings.getController().
+
+# Home page
+GET     /                           @controllers.Application.index
+GET     /randomUUID                 @controllers.Application.randomUUID
+
+# User management API
+#GET     /users/index                @controllers.Users.index
+#GET     /users                      @controllers.Users.findUsers
+#POST    /user                       @controllers.Users.createUser
+
+# Map SqlQuery URL paths
+GET     /sqlqueries                  @controllers.SqlQueriesController.findAllDocuments
+GET     /sqlqueries/show/:name       @controllers.SqlQueriesController.findByName(name)
+POST    /sqlqueries/new              @controllers.SqlQueriesController.createDocument
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+POST    /drivers/create               @controllers.JdbcDrivesController.createDocument
+POST    /drivers/update/:name         @controllers.JdbcDrivesController.updateDocument(name:String)
+POST    /drivers/upload               @controllers.JdbcDrivesController.upload
+GET     /drivers/findbyname/:name     @controllers.JdbcDrivesController.findByName(name:String)
+GET     /drivers                      @controllers.JdbcDrivesController.findAllDocuments
+
+POST    /databases/testconnection     @controllers.JdbcDatabaseController.testDatabase
+POST    /databases/create             @controllers.JdbcDatabaseController.createDocument
+POST    /databases/update/:name       @controllers.JdbcDatabaseController.updateDocument(name:String)
+GET     /databases/findbyname/:name   @controllers.JdbcDatabaseController.findByName(name:String)
+GET     /databases                    @controllers.JdbcDatabaseController.findAllDocuments
