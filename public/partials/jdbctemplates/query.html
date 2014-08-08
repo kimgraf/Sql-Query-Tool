@@ -1,14 +1,14 @@
 <div ng-controller="SqlQueryCtrl as sq">
-    <form id="CreateSqlQueryForm" name="CreateSqlQueryForm" class="form-horizontal" role="form"
-          ng-submit="sq.createSqlQuery()">
+    <form id="CreateSqlQueryForm" name="CreateSqlQueryForm" class="form-horizontal" role="form">
         <legend class="sm-col-12">Query Information</legend>
 
         <div class="form-group">
             <label id="lbl_Name" for="name" class="col-sm-4 control-label">Name</label>
 
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="name" id="name" placeholder=""
-                       ng-model="sq.name">
+                <input ng-show="!sq.isEdit" type="text" class="form-control" name="name" id="name" placeholder=""
+                       ng-model="sq.sqlquery.name">
+                <span ng-show="sq.isEdit" class="form-control">{{sq.sqlquery.name}}</span>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
 
             <div class="col-sm-8">
                 <textarea type="text" class="form-control" name="queryText" id="queryText" placeholder=""
-                       ng-model="sq.queryText" ></textarea>
+                       ng-model="sq.sqlquery.queryText" ></textarea>
             </div>
         </div>
 
@@ -39,21 +39,20 @@
 
             <div class="col-sm-8">
                 <textarea type="text" class="form-control" name="description" id="description" placeholder=""
-                       ng-model="sq.description"></textarea>
+                       ng-model="sq.sqlquery.description"></textarea>
             </div>
         </div>
 
-        <pre>{{ sq.sqlquery | json }}</pre>
-
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-8 text-right">
+                <button ng-show="!sq.isEdit" ng-click="sq.createSqlQuery()" type="button" class="btn btn-success" id="btn_create">Save</button>
+                <button ng-show="sq.isEdit" ng-click="sq.updateSqlQuery()" type="button" class="btn btn-success" id="btn_update">Update</button>
+                <button ng-click="sq.runQuery()" type="button" class="btn btn-success" id="btn_run">Run</button>
                 <a ng-href="/#/" id="btn_cancel" class="btn btn-warning">Cancel</a>
-
-                <button type="submit" class="btn btn-success" id="btn_run">Run</button>
-                <button type="submit" class="btn btn-success" id="btn_create">Save</button>
              </div>
         </div>
 
+        <pre>{{ sq.sqlquery | json }}</pre>
 
     </form>
 </div>

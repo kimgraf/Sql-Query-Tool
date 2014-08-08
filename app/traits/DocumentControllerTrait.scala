@@ -102,13 +102,13 @@ trait DocumentControllerTrait[A] extends Controller with MongoController {
           collection.update(Json.obj("name" -> name),source).map {
             lastError =>
               logger.error(s"Successfully inserted with LastError: $lastError")
-              Created("Document Created")
+              Created("Document Updated")
           } .recover {
             case LastError(ok, err, code, errMsg, originalDocument, updated, updatedExisting) =>
               logger.error("Mongo error, ok: " + ok + " err: " + err + " code: " + code + " errMsg: " + errMsg)
               if (code.get == 11000) Conflict("Document already exists " + errMsg) else InternalServerError
           }
-      }.getOrElse(Future.successful(BadRequest("Failed to insert document" )))
+      }.getOrElse(Future.successful(BadRequest("Failed to update document" )))
   }
 
   def findAllDocuments = Action.async {

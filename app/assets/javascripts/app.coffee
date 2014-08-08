@@ -8,7 +8,8 @@ dependencies = [
     'sqlQueriesApp.directives',
     'sqlQueriesApp.common',
     'sqlQueriesApp.routeConfig',
-    'angularFileUpload'
+    'angularFileUpload',
+    'ngSanitize'
 ]
 
 
@@ -22,6 +23,10 @@ angular.module('sqlQueriesApp.routeConfig', ['ngRoute'])
                 templateUrl: '/assets/partials/jdbctemplates/query_list.html'
             })
             .when('/sqlquery/new', {
+                controller : 'SqlQueryCtrl',
+                templateUrl: '/assets/partials/jdbctemplates/query.html'
+            })
+            .when('/sqlquery/edit', {
                 controller : 'SqlQueryCtrl',
                 templateUrl: '/assets/partials/jdbctemplates/query.html'
             })

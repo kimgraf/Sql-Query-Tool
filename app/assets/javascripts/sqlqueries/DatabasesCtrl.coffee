@@ -6,7 +6,7 @@ class DatabasesCrtl
 		@getAllDatabases()
 
 	editDatabase: (name) ->
-        @$log.debug "findDatabase() #[name}"
+        @$log.debug "editDatabase() #[name}"
         @SqlQueriesService.findByName("/databases/findbyname/#{name}")
         .then(
             (data) =>

@@ -16,6 +16,7 @@ class DatabaseCtrl
 
     validate: () ->
         @$log.debug "validate()"
+        @database.driver = @driver.name
         @errorMsg =""
         @errorMsg += "Name is required " if not @database.name
         @errorMsg += "Url is required " if not @database.url
@@ -26,13 +27,6 @@ class DatabaseCtrl
         if @errorMsg.length > 0
             @$log.error @errorMsg
             return
-
-        @database =
-            'name': @database.name
-            'url':@database.url
-            'userName': @database.userName
-            'password': @database.password
-            'driver': @driver.name
 
         @SqlQueriesService.create("/databases/create", @database)
         .then(
@@ -50,13 +44,6 @@ class DatabaseCtrl
         if @errorMsg.length > 0
             @$log.error @errorMsg
             return
-
-        @database =
-            'name': @database.name
-            'url':@database.url
-            'userName': @database.userName
-            'password': @database.password
-            'driver': @driver.name
 
         @SqlQueriesService.create("/databases/update/#{@database.name}", @database)
         .then(
@@ -97,13 +84,6 @@ class DatabaseCtrl
         if @errorMsg.length > 0
             @$log.error @errorMsg
             return
-
-        @database =
-            'name': @database.name
-            'url':@database.url
-            'userName': @database.userName
-            'password': @database.password
-            'driver': @driver.name
 
         @SqlQueriesService.post("/databases/testconnection", @database)
         .then(

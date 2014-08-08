@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="err" ng-show="dr.errorMsg.length > 0">{{dr.errorMsg}}</div>
+        <div class="err" ng-bind-html="dr.errorMsg" ng-show="dr.errorMsg.length > 0"></div>
 
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-8 text-right">

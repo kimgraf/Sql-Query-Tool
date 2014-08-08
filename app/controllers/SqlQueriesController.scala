@@ -9,6 +9,9 @@ import models._
 import traits.DocumentControllerTrait
 import models.JsonFormats.sqlQueryFormat
 import javax.inject.Singleton
+import play.api.mvc.{Controller, Action}
+import scala.concurrent.Future
+
 
 @Singleton
 class SqlQueriesController extends DocumentControllerTrait[SqlQuery]  {
@@ -19,16 +22,17 @@ class SqlQueriesController extends DocumentControllerTrait[SqlQuery]  {
     Index(List("name" -> IndexType.Ascending), unique = true)
   )
 
+  def runQuery = Action.async(parse.json) {
+    println("in runQuery")
+    request =>
+      val v = request.body.validate[SqlQuery]
 
-//  def createSqlQuery = Action.async(parse.json) {
-//    println("in createSqlQuery")
-//    request =>
-//      val v = request.body.validate[SqlQuery]
-//
-//      if(v.isInstanceOf[JsError] ){
-//        logger.error(v.toString)
-//        BadRequest("invalid json " + v)
-//      }
+      if(v.isInstanceOf[JsError] ){
+        logger.error(v.toString)
+        BadRequest("invalid json " + v)
+      }
+
+      Future.successful(Ok("runQuery"))
 //      v.map{
 //        source =>
 //          collection.insert(source).map {
@@ -41,40 +45,6 @@ class SqlQueriesController extends DocumentControllerTrait[SqlQuery]  {
 //              if (code.get == 11000) Conflict("SQL Query already exists " + errMsg) else InternalServerError
 //          }
 //      }.getOrElse(Future.successful(BadRequest("Failed to insert SQL Query" )))
-//  }
-//
-//  def findSqlQuery(name:String) = Action.async {
-//    Future.successful(BadRequest("findSqlQuery"))
-//
-////    val cursor: Cursor[SqlQuery] = collection.
-////      // find all
-////      find(Json.obj()).
-//
-//  }
-//
-//  def findSqlQueries = Action.async {
-//    println("in findSqlQueries")
-//    // let's do our query
-//    val cursor: Cursor[SqlQuery] = collection.
-//      // find all
-//      find(Json.obj()).
-//      // sort them by creation date
-//      sort(Json.obj("name" -> 1)).
-//      // perform the query and get a cursor of JsObject
-//      cursor[SqlQuery]
-//
-//    // gather all the JsObjects in a list
-//    val futureSqlQueriesList: Future[List[SqlQuery]] = cursor.collect[List]()
-//
-//    // transform the list into a JsArray
-//    val futureSqlQueriesJsonArray: Future[JsArray] = futureSqlQueriesList.map { queries =>
-//      Json.arr(queries)
-//    }
-//    // everything's ok! Let's reply with the array
-//    futureSqlQueriesJsonArray.map {
-//      queries =>
-//        Ok(queries(0))
-//    }
-//  }
+  }
 
 }

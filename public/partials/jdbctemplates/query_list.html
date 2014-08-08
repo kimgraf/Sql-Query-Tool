@@ -24,7 +24,7 @@
         <tbody>
         <tr ng-repeat="query in sqc.queries">
             <td>
-               <a ng-href="/sqlqueries/show/{{query.name}}" >{{ query.name }}</a>
+               <a ng-click="sqc.editQuery(query.name)" href="">{{ query.name }}</a>
             </td>
             <td>
                 {{ query.description }}
