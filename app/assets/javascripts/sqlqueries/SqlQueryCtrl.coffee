@@ -1,7 +1,7 @@
 
 class SqlQueryCtrl
 
-    constructor: (@$log, @$rootScope, @$location,  @SqlQueriesService) ->
+    constructor: (@$scope, @$log, @$rootScope, @$location,  @SqlQueriesService) ->
         @$log.debug "constructing SqlQueryCtrl"
         @databases
         @database = {}
@@ -9,6 +9,10 @@ class SqlQueryCtrl
         @queryText
         @errorMsg
         @sqlquery = {}
+#        @gridOptions = {}
+        $scope.myData = null
+
+        @$scope.gridOptions = {data: 'myData'}
         @isEdit = false
         if @$rootScope.sqlquery
             @sqlquery = @$rootScope.sqlquery
@@ -85,20 +89,22 @@ class SqlQueryCtrl
     runQuery: () ->
         @$log.debug "runQuery() #{@sqlquery}"
         @validate()
+        @$scope.gridOptions = null
         if @errorMsg.length > 0
             @$log.error @errorMsg
             return
 
-        @SqlQueriesService.post("/sqlqueries/run", @database)
+        @SqlQueriesService.post("/sqlqueries/run", @sqlquery)
         .then(
-            (data) =>
-                @$log.debug "Post test #{data} JDBC Database"
-                @errorMsg = JSON.stringify(data)
-#                @$location.path("/databases")
+            (res) =>
+                @$scope.myData = res.rows
+                @$scope.gridOptions = {data: 'myData'}
+                @errorMsg = JSON.stringify(res.rows)
+                @$log.debug "Post test #{@gridOptions} JDBC Database"
             ,
             (error) =>
-                @$log.error "Unable to post test JDBC Database: #{error}"
-                @errorMsg = error
+                @errorMsg = JSON.stringify(error)
+                @$log.error "Unable to post test JDBC Database: #{error.error}"
             )
 
 

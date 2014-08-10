@@ -9,7 +9,8 @@ dependencies = [
     'sqlQueriesApp.common',
     'sqlQueriesApp.routeConfig',
     'angularFileUpload',
-    'ngSanitize'
+    'ngSanitize',
+    'ngGrid'
 ]
 
 
