@@ -99,8 +99,6 @@ class SqlQueryCtrl
             (res) =>
                 @$scope.myData = res.rows
                 @$scope.gridOptions = {data: 'myData'}
-                @errorMsg = JSON.stringify(res.rows)
-                @$log.debug "Post test #{@gridOptions} JDBC Database"
             ,
             (error) =>
                 @errorMsg = JSON.stringify(error)

@@ -28,7 +28,9 @@
                 {{ driver.driverClass }}
             </td>
             <td>
-                {{ driver.driverFiles }}
+                <ul>
+                    <li ng-repeat="fileName in driver.driverFiles">{{ fileName }}</li>
+                </ul>
             </td>
         </tr>
         <tr ng-hide="jdvr.drivers.length">

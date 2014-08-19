@@ -35,10 +35,6 @@ angular.module('sqlQueriesApp.routeConfig', ['ngRoute'])
                 controller : 'DriversCrtl',
                 templateUrl: '/assets/partials/jdbctemplates/drivers_list.html'
             })
-            .when('/drivers/newinstance', {
-                controller : 'NewDriverInstanceCtrl',
-                templateUrl: '/assets/partials/jdbctemplates/jdbcdriver.html'
-             })
             .when('/drivers/new', {
                 controller : 'DriverCtrl',
                 templateUrl: '/assets/partials/jdbctemplates/driver.html'

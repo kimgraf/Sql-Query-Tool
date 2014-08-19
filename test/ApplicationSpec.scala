@@ -24,7 +24,15 @@ class ApplicationSpec extends Specification {
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Your new application is ready.")
+      contentAsString(home) must contain ("Sql Queries")
+    }
+
+    "render the databases page" in new WithApplication{
+      val home = route(FakeRequest(GET, "/databases")).get
+
+      status(home) must equalTo(OK)
+      contentType(home) must beSome.which(_ == "application/json")
+      contentAsString(home) must contain ("db 2")
     }
   }
 }

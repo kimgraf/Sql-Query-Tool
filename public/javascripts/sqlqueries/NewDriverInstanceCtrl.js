@@ -40,7 +40,7 @@ var NewDriverInstanceCtrl = [ '$scope', '$http', '$timeout', '$upload', 'SqlQuer
 
 		for ( var i = 0; i < $scope.selectedFiles.length; i++) {
 		    $scope.start(i);
-		    $scope.driverfiles[$scope.driverfiles.length] = $scope.selectedFiles[i].name;
+//		    $scope.driverFiles[$scope.driverFiles.length] = $scope.selectedFiles[i].name;
 		}
 
 		if($scope.errorMsg){
@@ -48,17 +48,17 @@ var NewDriverInstanceCtrl = [ '$scope', '$http', '$timeout', '$upload', 'SqlQuer
 		}
 
 //		var jdvr = {'name': $scope.drivername, 'driverClass':$scope.driverclass}
-		var jdvr = {'name': $scope.drivername, 'driverClass':$scope.driverclass, 'driverFiles':$scope.driverfiles}
-		var promise = SqlQueriesService.create(jdvr, '/drivers/create')
-		promise.then(
-            function success(data ){
-                console.log("success " + data)
-                NewDriverInstanceCtrl.modalInstance.close(jdvr)
-            }, function error(data){
-                console.log("error " + data)
-                $scope.errorMsg = data
-            }
-		)
+//		var jdvr = {'name': $scope.drivername, 'driverClass':$scope.driverclass, 'driverFiles':$scope.driverfiles}
+//		var promise = SqlQueriesService.create(jdvr, '/drivers/create')
+//		promise.then(
+//            function success(data ){
+//                console.log("success " + data)
+//                NewDriverInstanceCtrl.modalInstance.close(jdvr)
+//            }, function error(data){
+//                console.log("error " + data)
+//                $scope.errorMsg = data
+//            }
+//		)
 
     }
 
@@ -156,6 +156,9 @@ var NewDriverInstanceCtrl = [ '$scope', '$http', '$timeout', '$upload', 'SqlQuer
 			});
 		} else {
 			var fileReader = new FileReader();
+			fileReader.onloadend = function(e) {
+                console.log(e)
+            }
             fileReader.onload = function(e) {
 		        $scope.upload[index] = $upload.http({
 		        	url: '/drivers/upload',
@@ -170,7 +173,7 @@ var NewDriverInstanceCtrl = [ '$scope', '$http', '$timeout', '$upload', 'SqlQuer
 					$scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 				});
             }
-	        fileReader.readAsArrayBuffer($scope.dataUrls[index]);
+	        fileReader.readAsArrayBuffer($scope.selectedFiles[index]);
 		}
 	};
 

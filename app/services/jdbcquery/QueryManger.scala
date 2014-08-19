@@ -79,17 +79,22 @@ object QueryManger {
   }
 
   def getRows(resultSet : ResultSet) : JsValue = {
-    val fieldCnt = resultSet.getMetaData.getColumnCount
+    var fieldCnt = resultSet.getMetaData.getColumnCount
+    var rowCnt = 1
+    var done = false
 
     var rows: JsArray = Json.arr()
 
-    while ( resultSet.next() ) {
+    while ( resultSet.next() && !done) {
       var row = Json.obj()
         1 to fieldCnt foreach
         {i =>
           row = row ++ Json.obj(resultSet.getMetaData.getColumnName(i).toString -> resultSet.getObject(i).toString)
         }
         rows = rows ++ Json.arr(row)
+        rowCnt += 1
+        if(rowCnt >= 2000)
+          done = true
       }
 
     return rows
