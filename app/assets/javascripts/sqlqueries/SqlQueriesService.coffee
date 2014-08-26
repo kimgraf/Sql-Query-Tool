@@ -7,18 +7,34 @@ class SqlQueriesService
     constructor: (@$log, @$http, @$q) ->
         @$log.debug "constructing SqlQueriesService"
 
-    findByName: (url) ->
-        @$log.debug "create #{url}"
+    deleteByName: (url) ->
+        @$log.debug "deleteByName #{url}"
         deferred = @$q.defer()
 
         @$http.get(url)
         .success((data, status, headers) =>
-                @$log.info("Successfully created - status #{status}")
+                @$log.info("Successfully deleted - status #{status}")
                 @$log.info(data)
                 deferred.resolve(data)
             )
         .error((data, status, headers) =>
-                @$log.error("Failed to create - status #{status}")
+                @$log.error("Failed to delete - status #{status}")
+                deferred.reject(data);
+            )
+        deferred.promise
+
+    findByName: (url) ->
+        @$log.debug "findByName #{url}"
+        deferred = @$q.defer()
+
+        @$http.get(url)
+        .success((data, status, headers) =>
+                @$log.info("Successfully found - status #{status}")
+                @$log.info(data)
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to find - status #{status}")
                 deferred.reject(data);
             )
         deferred.promise

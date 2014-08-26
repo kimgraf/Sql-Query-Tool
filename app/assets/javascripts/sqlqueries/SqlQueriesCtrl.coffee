@@ -37,8 +37,16 @@ class SqlQueriesCrtl
         @$location.path "/sqlquery/new"
 
 	deleteQuery: (name) ->
-	    @getAllQueries()
-	    @log.debug "deleteQuery() #{name}"
+        @$log.debug "deleteQuery() #{name}"
+        @SqlQueriesService.deleteByName("/sqlqueries/deletebyname/#{name}")
+        .then(
+            (data) =>
+                @$log.debug "Promise returned #{data.length} queries"
+                @getAllQueries()
+            ,
+            (error) =>
+                @$log.error "Unable to get Sql Queries: #{error}"
+            )
 
 
 
