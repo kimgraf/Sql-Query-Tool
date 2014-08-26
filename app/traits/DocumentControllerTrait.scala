@@ -4,6 +4,7 @@ import play.api.libs.json.{JsArray, Json, JsError}
 import play.api.mvc.{Controller, Action}
 import play.modules.reactivemongo.MongoController
 import play.modules.reactivemongo.json.collection.JSONCollection
+import reactivemongo.bson.BSONDocument
 
 import scala.concurrent.Future
 import org.slf4j.{LoggerFactory, Logger}
@@ -27,13 +28,27 @@ trait DocumentControllerTrait[A] extends Controller with MongoController {
     println("in findByName")
     val query = Json.obj(("name", name))
 
-    val futureItem = collection.
+    collection.
       find(query).
-      one[A] // <--- eeek!
-
-    futureItem.map {
+      one[A].map {
       case Some(item) => Ok(Json.toJson(item))
       case None => NotFound(Json.obj("message" -> "No such docuemnt"))
+    }
+  }
+
+  def deleteByName(name : String) = Action.async {
+    println(s"in deleteByName ${name}")
+    val selector = Json.obj(
+      "name" -> name)
+
+    collection.remove(selector).map {
+    lastError =>
+      logger.error(s"Successfully deleted with LastError: $lastError")
+      Ok("Document deleted")
+    }.recover {
+      case LastError(ok, err, code, errMsg, originalDocument, updated, updatedExisting) =>
+        logger.error("Mongo error, ok: " + ok + " err: " + err + " code: " + code + " errMsg: " + errMsg)
+        BadRequest("Document not deleted " + errMsg)
     }
   }
 

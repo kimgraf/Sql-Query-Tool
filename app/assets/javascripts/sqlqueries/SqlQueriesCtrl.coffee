@@ -32,9 +32,14 @@ class SqlQueriesCrtl
 		    )
 
 	createSqlQuery: () ->
-	    @$log.debug "createSqlQuery()"
+        @$log.debug "createSqlQuery()"
+        @$rootScope.sqlquery = null
+        @$location.path "/sqlquery/new"
 
-	    @$location.path "/sqlquery/new"
+	deleteQuery: (name) ->
+	    @getAllQueries()
+	    @log.debug "deleteQuery() #{name}"
+
 
 
 controllersModule.controller('SqlQueriesCrtl', SqlQueriesCrtl)

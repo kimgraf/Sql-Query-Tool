@@ -36,7 +36,8 @@
                 status
             </td>
             <td>
-                actions
+                <input style="height: 24px" type="image" title="Run the query" src="/assets/images/run.png" ng-click="sqc.runQuery(query.name)"/>
+                <input style="height: 24px" type="image" title="Delete the query" src="/assets/images/delete.jpg" ng-click="sqc.deleteQuery(query.name)"/>
             </td>
         </tr>
         <tr ng-hide="sqc.queries.length">
@@ -46,7 +47,7 @@
         </tr>
         </tbody>
     </table>
-    <hr>
-    <h4>Debug:</h4>
-    <pre>{{ sqc.queries | json }}</pre>
+    <!--<hr>-->
+    <!--<h4>Debug:</h4>-->
+    <!--<pre>{{ sqc.queries | json }}</pre>-->
 </div>

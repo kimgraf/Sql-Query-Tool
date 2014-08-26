@@ -23,10 +23,13 @@ class SqlQueriesController extends DocumentControllerTrait[SqlQuery]  {
 
   def databasecol: JSONCollection = db.collection[JSONCollection]("jdbcdatabaseconfig")
   def driverscol: JSONCollection = db.collection[JSONCollection]("jdbcdrivers")
-  def collection: JSONCollection = db.collection[JSONCollection]("sqlquery")
-  collection.indexesManager.ensure(
-    Index(List("name" -> IndexType.Ascending), unique = true)
-  )
+  def collection: JSONCollection = {
+    val collection = db.collection[JSONCollection]("sqlquery")
+    collection.indexesManager.ensure(
+      Index(List("name" -> IndexType.Ascending), unique = true)
+    )
+    return collection
+  }
 
   def runQuery = Action.async(parse.json) {
     println("in runQuery")
@@ -75,18 +78,6 @@ class SqlQueriesController extends DocumentControllerTrait[SqlQuery]  {
         Future.successful(BadRequest(QueryManger.err))
       else
         Future.successful(Ok(resObj))
-//      v.map{
-//        source =>
-//          collection.insert(source).map {
-//            lastError =>
-//              logger.error(s"Successfully inserted with LastError: $lastError")
-//              Created("SQL Query Configuration Created")
-//          } .recover {
-//            case LastError(ok, err, code, errMsg, originalDocument, updated, updatedExisting) =>
-//              logger.error("Mongo error, ok: " + ok + " err: " + err + " code: " + code + " errMsg: " + errMsg)
-//              if (code.get == 11000) Conflict("SQL Query already exists " + errMsg) else InternalServerError
-//          }
-//      }.getOrElse(Future.successful(BadRequest("Failed to insert SQL Query" )))
   }
 
 }

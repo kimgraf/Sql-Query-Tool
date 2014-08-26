@@ -18,6 +18,7 @@ POST    /sqlqueries/run               @controllers.SqlQueriesController.runQuery
 POST    /sqlqueries/create            @controllers.SqlQueriesController.createDocument
 POST    /sqlqueries/update/:name      @controllers.SqlQueriesController.updateDocument(name:String)
 GET     /sqlqueries/findbyname/:name  @controllers.SqlQueriesController.findByName(name)
+GET     /sqlqueries/deletebyname/:name  @controllers.SqlQueriesController.deleteByName(name)
 GET     /sqlqueries                   @controllers.SqlQueriesController.findAllDocuments
 
 
