@@ -1,7 +1,7 @@
 
 class SqlQueryCtrl
 
-    constructor: (@$scope, @$log, @$rootScope, @$location,  @SqlQueriesService) ->
+    constructor: (@$scope, @$log, @$rootScope, @$location, @SqlQueriesService) ->
         @$log.debug "constructing SqlQueryCtrl"
         @databases
         @database = {}
@@ -9,7 +9,6 @@ class SqlQueryCtrl
         @queryText
         @errorMsg
         @sqlquery = {}
-#        @gridOptions = null
         $scope.myData = null
 
         @$scope.gridOptions = {data: 'myData'}
@@ -107,16 +106,23 @@ class SqlQueryCtrl
 
     deleteQuery: (name) ->
         @$log.debug "deleteQuery() #{name}"
-        @SqlQueriesService.deleteByName("/sqlqueries/deletebyname/#{name}")
-        .then(
-            (data) =>
-                @$log.debug "Promise returned #{data.length} queries"
-                @$rootScope.database = null
-                @database = {}
-                @$location.path("/sqlqueries")
-            ,
-            (error) =>
-                @$log.error "Unable to get Sql Queries: #{error}"
-            )
+        BootstrapDialog.confirm(
+            "Do you want to delete #{name} query"
+            (result) =>
+                if result
+                    @SqlQueriesService.deleteByName("/sqlqueries/deletebyname/#{name}")
+                    .then(
+                        (data) =>
+                            @$log.debug "Promise returned #{data.length} queries"
+                            @$rootScope.database = null
+                            @database = {}
+                            @$location.path("/sqlqueries")
+                        ,
+                        (error) =>
+                            @$log.error "Unable to get Sql Queries: #{error}"
+                        )
+                else
+                    @$log.debug "deleteQuery() #{name}"
+                )
 
 controllersModule.controller('SqlQueryCtrl', SqlQueryCtrl)

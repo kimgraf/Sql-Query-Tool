@@ -38,16 +38,22 @@ class SqlQueriesCrtl
 
 	deleteQuery: (name) ->
         @$log.debug "deleteQuery() #{name}"
-        @SqlQueriesService.deleteByName("/sqlqueries/deletebyname/#{name}")
-        .then(
-            (data) =>
-                @$log.debug "Promise returned #{data.length} queries"
-                @getAllQueries()
-            ,
-            (error) =>
-                @$log.error "Unable to get Sql Queries: #{error}"
-            )
-
+        BootstrapDialog.confirm(
+            "Do you want to delete #{name} query"
+            (result) =>
+                if result
+                    @SqlQueriesService.deleteByName("/sqlqueries/deletebyname/#{name}")
+                    .then(
+                        (data) =>
+                            @$log.debug "Promise returned #{data.length} queries"
+                            @getAllQueries()
+                        ,
+                        (error) =>
+                            @$log.error "Unable to get Sql Queries: #{error}"
+                        )
+                else
+                    @$log.debug "deleteQuery() #{name}"
+                )
 
 
 controllersModule.controller('SqlQueriesCrtl', SqlQueriesCrtl)

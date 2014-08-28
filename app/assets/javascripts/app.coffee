@@ -10,7 +10,7 @@ dependencies = [
     'sqlQueriesApp.routeConfig',
     'angularFileUpload',
     'ngSanitize',
-    'ngGrid'
+    'ngGrid',
 ]
 
 
