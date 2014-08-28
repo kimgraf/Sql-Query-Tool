@@ -47,14 +47,15 @@
 
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-8 text-right">
-                <button ng-show="!sq.isEdit" ng-click="sq.createSqlQuery()" type="button" class="btn btn-success" id="btn_create">Save</button>
-                <button ng-show="sq.isEdit" ng-click="sq.updateSqlQuery()" type="button" class="btn btn-success" id="btn_update">Update</button>
-                <button ng-click="sq.runQuery()" type="button" class="btn btn-success" id="btn_run">Run</button>
-                <a ng-href="/#/" id="btn_cancel" class="btn btn-warning">Cancel</a>
+                <input ng-show="!sq.isEdit" class="btn" style="height: 52px" type="image" title="Create the query" src="/assets/images/save.png" ng-click="sq.createSqlQuery()"/>
+                <input ng-show="sq.isEdit" class="btn" style="height: 48px" type="image" title="Update the query" src="/assets/images/update.png" ng-click="sq.updateSqlQuery()"/>
+                <input class="btn" style="height: 48px" type="image" title="Run the query" src="/assets/images/run.png" ng-click="sq.runQuery()"/>
+                <input ng-show="sq.isEdit" class="btn" style="height: 48px " type="image" title="Delete the query" src="/assets/images/delete.jpg" ng-click="sq.deleteQuery(sq.sqlquery.name)"/>
+                <input class="btn" style="height: 48px" type="image" title="Cancel the query" src="/assets/images/cancel.png" ng-click="sq.$location.path('/#/')"/>
              </div>
         </div>
 
-        <div class="gridStyle" ng-grid="gridOptions"></div>
+        <div ng-show="myData != null" class="gridStyle" ng-grid="gridOptions"></div>
 
         <pre>{{ sq.sqlquery | json }}</pre>
 
