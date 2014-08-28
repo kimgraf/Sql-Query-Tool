@@ -9,7 +9,7 @@ class SqlQueryCtrl
         @queryText
         @errorMsg
         @sqlquery = {}
-#        @gridOptions = {}
+#        @gridOptions = null
         $scope.myData = null
 
         @$scope.gridOptions = {data: 'myData'}
@@ -105,5 +105,18 @@ class SqlQueryCtrl
                 @$log.error "Unable to post test JDBC Database: #{error.error}"
             )
 
+    deleteQuery: (name) ->
+        @$log.debug "deleteQuery() #{name}"
+        @SqlQueriesService.deleteByName("/sqlqueries/deletebyname/#{name}")
+        .then(
+            (data) =>
+                @$log.debug "Promise returned #{data.length} queries"
+                @$rootScope.database = null
+                @database = {}
+                @$location.path("/sqlqueries")
+            ,
+            (error) =>
+                @$log.error "Unable to get Sql Queries: #{error}"
+            )
 
 controllersModule.controller('SqlQueryCtrl', SqlQueryCtrl)
