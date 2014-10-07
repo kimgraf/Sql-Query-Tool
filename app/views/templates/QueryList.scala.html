@@ -1,0 +1,59 @@
+
+<div ng-controller="SqlQueriesCrtl as sqc">
+    <div class="form-group">
+        <h3>
+            Sql Queries
+            <button ng-click="sqc.createSqlQuery()" class="btn btn-primary pull-right" id="btn_sqlquery_create">Add Query</button>
+        </h3>
+        <hr>
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="search" ng-model="sqc.searchText" placeholder="Type here to filter SQL Query...">
+        <hr>
+    </div>
+
+    <table id="user_list" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Database</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="query in sqc.queries">
+            <td>
+               <a ng-click="sqc.editQuery(query.name)" href="">{{ query.name }}</a>
+            </td>
+            <td>
+                {{ query.description }}
+            </td>
+            <td>
+                {{ query.database }}
+            </td>
+            <td>
+                status
+            </td>
+            <td>
+                <input style="height: 24px" type="image" title="Run the query" src="/assets/images/run.png" ng-click="sqc.runQuery(query.name)"/>
+                <input style="height: 24px" type="image" title="Delete the query" src="/assets/images/delete.jpg" ng-click="sqc.deleteQuery(query.name)"/>
+            </td>
+        </tr>
+        <tr  ng-show="queryData[query.name].gridOptions != null" >
+            <td>
+                <div class="gridStyle" ng-grid="queryData[query.name].gridOptions"></div>
+            </td>
+        </tr>
+        <tr ng-hide="sqc.queries.length">
+            <td colspan="3">
+                <p class="text-center">No SQL Queries Found</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--<hr>-->
+    <!--<h4>Debug:</h4>-->
+    <!--<pre>{{ sqc.queries | json }}</pre>-->
+</div>
