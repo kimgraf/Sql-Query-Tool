@@ -40,6 +40,11 @@
                 <input style="height: 24px" type="image" title="Delete the query" src="/assets/images/delete.jpg" ng-click="sqc.deleteQuery(query.name)"/>
             </td>
         </tr>
+        <tr  ng-show="queryData[query.name].gridOptions != null" >
+            <td>
+                <div class="gridStyle" ng-grid="queryData[query.name].gridOptions"></div>
+            </td>
+        </tr>
         <tr ng-hide="sqc.queries.length">
             <td colspan="3">
                 <p class="text-center">No SQL Queries Found</p>

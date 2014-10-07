@@ -1,8 +1,10 @@
 class SqlQueriesCrtl
 
-	constructor: (@$location, @$rootScope, @$log, @SqlQueriesService) ->
+	constructor: (@$scope, @$location, @$rootScope, @$log, @SqlQueriesService) ->
 		@$log.debug "constructing Sql Queries Controller"
+		@searchText
 		@queries = []
+		@$scope.queryData = {}
 		@getAllQueries()
 
 	editQuery: (name) ->
@@ -26,6 +28,8 @@ class SqlQueriesCrtl
 		    (data) =>
 		        @$log.debug "Promise returned #{data.length} queries"
 		        @queries = data
+		        for query in @queries
+		            @$scope.queryData[query.name] = {'gridOptions': {gridDim: null, data: null}}
 		    ,
 		    (error) =>
 		        @$log.error "Unable to get Sql Queries: #{error}"
@@ -35,6 +39,28 @@ class SqlQueriesCrtl
         @$log.debug "createSqlQuery()"
         @$rootScope.sqlquery = null
         @$location.path "/sqlquery/new"
+
+    runQuery: (index) ->
+        @$log.debug "runQuery() #[name}"
+        @SqlQueriesService.findByName("/sqlqueries/findbyname/#{@queryData[index].name}")
+        .then(
+            (data) =>
+                @$log.debug "Promise returned #{data.length} queries"
+                @queryData[index] = null
+                @SqlQueriesService.post("/sqlqueries/run", data)
+                .then(
+                    (res) =>
+                        @$scope.myData = res.rows
+                    ,
+                    (error) =>
+                        @errorMsg = JSON.stringify(error)
+                        @$log.error "Unable to post test JDBC Database: #{error.error}"
+                    )
+            ,
+            (error) =>
+                @$log.error "Unable to get Drivers: #{error}"
+            )
+
 
 	deleteQuery: (name) ->
         @$log.debug "deleteQuery() #{name}"

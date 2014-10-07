@@ -21,7 +21,8 @@ angular.module('sqlQueriesApp.routeConfig', ['ngRoute'])
         $routeProvider
             .when('/', {
                 controller : 'SqlQueriesCrtl',
-                templateUrl: '/assets/partials/jdbctemplates/query_list.html'
+                templateUrl: '/templates/templates.QueryList'
+#                templateUrl: '/assets/partials/jdbctemplates/query_list.html'
             })
             .when('/sqlquery/new', {
                 controller : 'SqlQueryCtrl',
