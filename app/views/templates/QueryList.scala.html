@@ -12,7 +12,7 @@
         <hr>
     </div>
 
-    <table id="user_list" class="table table-striped">
+    <table id="query_list" class="table table-striped">
         <thead>
         <tr>
             <th>Name</th>
@@ -39,11 +39,6 @@
             <td>
                 <input style="height: 24px" type="image" title="Run the query" src="/assets/images/run.png" ng-click="sqc.runQuery(query.name)"/>
                 <input style="height: 24px" type="image" title="Delete the query" src="/assets/images/delete.jpg" ng-click="sqc.deleteQuery(query.name)"/>
-            </td>
-        </tr>
-        <tr  ng-show="queryData[query.name].gridOptions != null" >
-            <td>
-                <div class="gridStyle" ng-grid="queryData[query.name].gridOptions"></div>
             </td>
         </tr>
         <tr ng-hide="sqc.queries.length">

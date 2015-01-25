@@ -34,8 +34,13 @@ POST    /databases/update/:name       @controllers.JdbcDatabaseController.update
 GET     /databases/findbyname/:name   @controllers.JdbcDatabaseController.findByName(name:String)
 GET     /databases                    @controllers.JdbcDatabaseController.findAllDocuments
 
+GET     /users                        @controllers.UserController.findAllDocuments
+POST    /users/create                 @controllers.UserController.createDocument
+GET     /user/findbyname/:name        @controllers.UserController.findByName(name:String)
+
 
 GET     /templates/:name            @controllers.TemplateController.getTemplate(name:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+

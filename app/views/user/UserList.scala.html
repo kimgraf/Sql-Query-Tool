@@ -1,0 +1,53 @@
+
+<div ng-controller="UsersCtrl as uc">
+    <div class="form-group">
+        <h3>
+            Users
+            <button ng-click="uc.createUser()" class="btn btn-primary pull-right" id="btn_user_create">Add User</button>
+        </h3>
+        <hr>
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="search" ng-model="uc.searchText" placeholder="Type here to filter Users...">
+        <hr>
+    </div>
+
+    <table id="user_list" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Roles</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in uc.users">
+            <td>
+               <a ng-click="uc.editUser(user.name)" href="">{{ user.name }}</a>
+            </td>
+            <td>
+                {{ user.description }}
+            </td>
+            <td>
+                {{ user.roles }}
+            </td>
+            <td>
+                status
+            </td>
+            <td>
+                <input style="height: 24px" type="image" title="Delete the user" src="/assets/images/delete.jpg" ng-click="uc.deleteUser(user.name)"/>
+            </td>
+        </tr>
+         <tr ng-hide="uc.users.length">
+            <td colspan="3">
+                <p class="text-center">No Users Found</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--<hr>-->
+    <!--<h4>Debug:</h4>-->
+    <!--<pre>{{ sqc.queries | json }}</pre>-->
+</div>

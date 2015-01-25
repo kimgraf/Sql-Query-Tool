@@ -9,7 +9,7 @@ class SqlQueryCtrl
         @queryText
         @errorMsg
         @sqlquery = {}
-        $scope.myData = null
+        @$scope.myData = null
 
         @$scope.gridOptions = {data: 'myData'}
         @isEdit = false
@@ -86,9 +86,10 @@ class SqlQueryCtrl
                 )
 
     runQuery: () ->
-        @$log.debug "runQuery() #{@sqlquery}"
+        @$log.debug "runQuery() #{@sqlquery.queryText}"
         @validate()
-        @$scope.gridOptions = null
+        @$scope.myData = null
+#        @$scope.gridOptions = null
         if @errorMsg.length > 0
             @$log.error @errorMsg
             return

@@ -106,3 +106,7 @@ button {
 	background-color: #F0F0F0;
 	border: 1px solid black;
 }
+ul.edit
+{
+    list-style-type: none;
+}

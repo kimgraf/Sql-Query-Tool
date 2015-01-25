@@ -2,6 +2,7 @@
 dependencies = [
     'ngRoute',
     'ui.bootstrap',
+#    'ui.grid',
     'sqlQueriesApp.filters',
     'sqlQueriesApp.services',
     'sqlQueriesApp.controllers',
@@ -10,7 +11,8 @@ dependencies = [
     'sqlQueriesApp.routeConfig',
     'angularFileUpload',
     'ngSanitize',
-    'ngGrid',
+    'checklist-model',
+#    'ngGrid',
 ]
 
 
@@ -31,6 +33,18 @@ angular.module('sqlQueriesApp.routeConfig', ['ngRoute'])
             .when('/sqlquery/edit', {
                 controller : 'SqlQueryCtrl',
                 templateUrl: '/assets/partials/jdbctemplates/query.html'
+            })
+            .when('/users', {
+                controller : 'UsersCtrl',
+                templateUrl: '/templates/user.UserList'
+            })
+            .when('/user/new', {
+                controller : 'UsersCtrl',
+                templateUrl: '/templates/user.User'
+            })
+            .when('/user/edit', {
+                controller : 'UsersCtrl',
+                templateUrl: '/templates/user.User'
             })
             .when('/drivers', {
                 controller : 'DriversCrtl',

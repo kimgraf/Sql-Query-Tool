@@ -1,0 +1,77 @@
+<div ng-controller="UserCtrl as uctrl">
+    <form id="DatabaseForm" name="DatabaseForm" class="form-horizontal" role="form"
+          ng-submit="uctrl.createUser()">
+        <legend class="sm-col-12">User Information</legend>
+
+        <div class="form-group">
+            <label id="lbl_Name" for="name" class="col-sm-4 control-label"><span style="color: red;">* </span>Name</label>
+
+            <div class="col-sm-8">
+                <input ng-show="!uctrl.isEdit" type="text" class="form-control" name="name" id="name" placeholder=""
+                       ng-model="uctrl.user.name">
+                <span ng-show="uctrl.isEdit" class="form-control">{{uctrl.user.name}}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_description" for="description" class="col-sm-4 control-label"><span style="color: red;">* </span>User Description</label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="description" id="description" placeholder=""
+                       ng-model="uctrl.user.description">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_roles" class="col-sm-4 control-label"><span style="color: red;">* </span>User Roles</label>
+
+            <div class="col-sm-7" id="viewroles" ng-show="uctrl.viewrole">
+                <span ng-show="uctrl.user.roles.length > 0">
+                <ul>
+                    <li ng-repeat="role in uctrl.user.roles">{{role.roleName}}</li>
+                </ul>
+                </span>
+                <div ><button ng-click="uctrl.viewrole = false" class="btn btn-primary" id="btn_roles">Edit</button></div>
+            </div>
+            <div class="col-sm-7" id="editroles" ng-hide="uctrl.viewrole">
+                <span ng-show="uctrl.user.roles.length > 0">
+                <ul class="edit">
+                    <li ng-repeat="role in uctrl.user.roles"><input type="checkbox" checklist-model="user.roles" checklist-value="role"> {{role.roleName}}</li>
+                </ul>
+                </span>
+                <div ><button ng-click="uctrl.doneEditRoles()" class="btn btn-primary" id="btn_rolesEdit">Done</button>
+                <button ng-click="uctrl.viewrole = true" class="btn btn-primary" id="btn_rolesEdit">Cancel</button></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_permissions" class="col-sm-4 control-label"><span style="color: red;">* </span>User Permissions</label>
+
+            <div class="col-sm-7">
+                <span ng-show="uctrl.user.permissions.length > 0">
+                    <ul>
+                        <li ng-repeat="permission in uctrl.user.permissions">{{permission.value}}</li>
+                    </ul>
+                </span>
+                <div ><button ng-click="db.newDriver()" class="btn btn-primary" id="btn_permissions">Edit</button></div>
+            </div>
+            <br/>
+            <div class="err" ng-show="errorMsg != null">{{errorMsg}}</div>
+            <br/>
+        </div>
+
+        <div class="err" ng-bind-html="uctrl.errorMsg" ng-show="uctrl.errorMsg.length > 0"></div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8 text-right">
+                <button ng-show="!uctrl.isEdit" type="button" class="btn btn-success" id="btn_create" ng-click="uctrl.createUser()">Save</button>
+                <button ng-show="uctrl.isEdit" type="button" class="btn btn-success" id="btn_update" ng-click="uctrl.updateUser()">Update</button>
+                <a ng-href="/#/users" id="btn_cancel" class="btn btn-warning">Cancel</a>
+            </div>
+        </div>
+
+        <pre>{{ uctrl.user | json }}</pre>
+
+    </form>
+
+ </div>

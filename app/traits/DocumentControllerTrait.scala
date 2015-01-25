@@ -24,8 +24,8 @@ trait DocumentControllerTrait[A] extends Controller with MongoController {
 
   implicit var format : Format[A]
 
-  def findByName( name : String) = Action.async {
-    println("in findByName")
+  def findDocByName( name : String) = {
+    println("in findDocByName")
     val query = Json.obj(("name", name))
 
     collection.
@@ -34,6 +34,19 @@ trait DocumentControllerTrait[A] extends Controller with MongoController {
       case Some(item) => Ok(Json.toJson(item))
       case None => NotFound(Json.obj("message" -> "No such docuemnt"))
     }
+  }
+
+  def findByName( name : String) = Action.async {
+    println("in findByName")
+    findDocByName(name);
+//    val query = Json.obj(("name", name))
+//
+//    collection.
+//      find(query).
+//      one[A].map {
+//      case Some(item) => Ok(Json.toJson(item))
+//      case None => NotFound(Json.obj("message" -> "No such docuemnt"))
+//    }
   }
 
   def deleteByName(name : String) = Action.async {

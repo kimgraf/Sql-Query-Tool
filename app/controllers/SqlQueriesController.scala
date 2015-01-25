@@ -7,7 +7,7 @@ import org.slf4j.{LoggerFactory, Logger}
 import play.api.libs.json._
 import models._
 import traits.DocumentControllerTrait
-import models.JsonFormats.sqlQueryFormat
+//import models.JsonFormats.sqlQueryFormat
 import javax.inject.Singleton
 import play.api.mvc.{Controller, Action}
 import scala.concurrent.{Await, Future}
@@ -19,7 +19,7 @@ import services.jdbcquery.QueryManger
 class SqlQueriesController extends DocumentControllerTrait[SqlQuery]  {
   implicit var databaseRormat : Format[JdbcDatabaseConfig] = Json.format[JdbcDatabaseConfig]
   implicit var jdbcDriverFormat : Format[JdbcDriverConfig] = Json.format[JdbcDriverConfig]
-  implicit var format : Format[SqlQuery] = sqlQueryFormat
+  implicit var format : Format[SqlQuery] = Json.format[SqlQuery] //sqlQueryFormat
 
   def databasecol: JSONCollection = db.collection[JSONCollection]("jdbcdatabaseconfig")
   def driverscol: JSONCollection = db.collection[JSONCollection]("jdbcdrivers")

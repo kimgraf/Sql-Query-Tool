@@ -28,8 +28,8 @@ class SqlQueriesCrtl
 		    (data) =>
 		        @$log.debug "Promise returned #{data.length} queries"
 		        @queries = data
-		        for query in @queries
-		            @$scope.queryData[query.name] = {'gridOptions': {gridDim: null, data: null}}
+#		        for query in @queries
+#		            @$scope.queryData[query.name] = { data: ''}
 		    ,
 		    (error) =>
 		        @$log.error "Unable to get Sql Queries: #{error}"

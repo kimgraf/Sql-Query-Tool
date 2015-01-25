@@ -93,7 +93,7 @@ object QueryManger {
         }
         rows = rows ++ Json.arr(row)
         rowCnt += 1
-        if(rowCnt >= 2000)
+        if(rowCnt > 2000)
           done = true
       }
 
