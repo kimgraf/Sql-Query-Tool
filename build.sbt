@@ -26,3 +26,6 @@ libraryDependencies ++= Seq(
 )
 
 //resolvers += Resolver.url("Objectify Play Repository", url("http://deadbolt.ws/releases/"))(Resolver.ivyStylePatterns)
+
+
+fork in run := true
